@@ -9,7 +9,7 @@ Please visit the {ActiveMerchant homepage}[http://activemerchant.org] for more r
 
 == This fork
 
-This fork is a workaround for a bug in REXML encountered in a Rails 2.1.2 web application:
+This fork is a workaround for a bug in REXML encountered in a Rails 2.1.2 web application running on Ruby 1.8.6:
 
   /usr/lib/ruby/gems/1.8/gems/rails-2.1.2/lib/commands/runner.rb:45: /usr/lib/ruby/gems/1.8/gems/activesupport-2.1.2/lib/active_support/dependencies.rb:276:in `load_missing_constant': uninitialized constant REXML::Formatters (NameError)
   	from /usr/lib/ruby/gems/1.8/gems/activesupport-2.1.2/lib/active_support/dependencies.rb:468:in `const_missing'
@@ -24,6 +24,8 @@ This fork is a workaround for a bug in REXML encountered in a Rails 2.1.2 web ap
   	from /usr/local/lib/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
   	from /usr/local/lib/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
   	from script/runner:3
+  	
+There is no problem running on the REXML in Ruby 1.8.7.  Unfortunately I don't have the option of upgrading the web application to Ruby 1.8.7 before I need to process payments with Psigate.  So I'm adding alternative support for {LibXML}[http://libxml.rubyforge.org/] as a workaround.
 
 == Supported Direct Payment Gateways
 
