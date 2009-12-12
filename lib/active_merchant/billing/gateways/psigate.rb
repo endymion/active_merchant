@@ -143,11 +143,8 @@ module ActiveMerchant #:nodoc:
               xml.root << node
             end
           end
-
-          puts "LibXML:"
-          puts xml.to_s
-          xml.to_s
           
+          xml.to_s          
         else
           xml = REXML::Document.new
           xml << REXML::XMLDecl.new
@@ -157,8 +154,6 @@ module ActiveMerchant #:nodoc:
             root.add_element(key.to_s).text = value if value
           end    
 
-          puts "REXML:"
-          puts xml.to_s
           xml.to_s
         end
       end
