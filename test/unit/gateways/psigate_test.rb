@@ -4,12 +4,12 @@ class PsigateTest < Test::Unit::TestCase
   def setup
     @gateway = PsigateGateway.new(
       :login => 'teststore',
-      :password => 'psigate1234'
+      :password => 'psigate1234', :libxml => true
     )
 
     @amount = 100
     @credit_card = credit_card('4111111111111111')
-    @options = { :order_id => 1, :billing_address => address }
+    @options = { :order_id => 1, :billing_address => address, :libxml => true }
   end
   
   def test_successful_authorization

@@ -103,26 +103,46 @@ module ActiveMerchant #:nodoc:
       def parse(xml)
         response = {:message => "Global Error Receipt", :complete => false}
 
-        xml = REXML::Document.new(xml)          
-        xml.elements.each('//Result/*') do |node|
+        if options[:libxml]
+          # Use alternative XML package due to a REXML bug in Ruby 1.8.6.
+          require 'xml'
 
-          response[node.name.downcase.to_sym] = normalize(node.text)
+          xml = XML::Document.string(xml)
+          xml.find('//Result/*').each do |node|
 
-        end unless xml.root.nil?
+            response[node.name.downcase.to_sym] = node.content
+
+          end 
+          
+        else
+
+          xml = REXML::Document.new(xml)          
+          xml.elements.each('//Result/*') do |node|
+
+            response[node.name.downcase.to_sym] = normalize(node.text)
+
+          end unless xml.root.nil?
+
+        end
 
         response
       end     
 
       def post_data(money, creditcard, options)
-        xml = REXML::Document.new
-        xml << REXML::XMLDecl.new
-        root  = xml.add_element("Order")
-        
-        for key, value in parameters(money, creditcard, options)
-          root.add_element(key.to_s).text = value if value
-        end    
+        if options[:libxml]
+          # Use alternative XML package due to a REXML bug in Ruby 1.8.6.
 
-        xml.to_s
+        else
+          xml = REXML::Document.new
+          xml << REXML::XMLDecl.new
+          root  = xml.add_element("Order")
+        
+          for key, value in parameters(money, creditcard, options)
+            root.add_element(key.to_s).text = value if value
+          end    
+
+          xml.to_s
+        end
       end
       
       # Set up the parameters hash just once so we don't have to do it
