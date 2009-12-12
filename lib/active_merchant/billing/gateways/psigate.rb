@@ -131,7 +131,23 @@ module ActiveMerchant #:nodoc:
       def post_data(money, creditcard, options)
         if options[:libxml]
           # Use alternative XML package due to a REXML bug in Ruby 1.8.6.
+          require 'xml'
 
+          xml = XML::Document.new
+          xml.root = XML::Node.new('Order')
+
+          for key, value in parameters(money, creditcard, options)
+            if value
+              node = XML::Node.new(key.to_s)
+              node.content = value.to_s
+              xml.root << node
+            end
+          end
+
+          puts "LibXML:"
+          puts xml.to_s
+          xml.to_s
+          
         else
           xml = REXML::Document.new
           xml << REXML::XMLDecl.new
@@ -141,6 +157,8 @@ module ActiveMerchant #:nodoc:
             root.add_element(key.to_s).text = value if value
           end    
 
+          puts "REXML:"
+          puts xml.to_s
           xml.to_s
         end
       end
