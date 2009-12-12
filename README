@@ -7,6 +7,24 @@ This library is the foundation of commerce for http://www.shopify.com.
 
 Please visit the {ActiveMerchant homepage}[http://activemerchant.org] for more resources, tutorials and other information about this project.
 
+== This fork
+
+This fork is a workaround for a bug in REXML encountered in a Rails 2.1.2 web application:
+
+  /usr/lib/ruby/gems/1.8/gems/rails-2.1.2/lib/commands/runner.rb:45: /usr/lib/ruby/gems/1.8/gems/activesupport-2.1.2/lib/active_support/dependencies.rb:276:in `load_missing_constant': uninitialized constant REXML::Formatters (NameError)
+  	from /usr/lib/ruby/gems/1.8/gems/activesupport-2.1.2/lib/active_support/dependencies.rb:468:in `const_missing'
+  	from /usr/lib/ruby/gems/1.8/gems/httparty-0.4.3/lib/httparty/core_extensions.rb:20:in `write'
+  	from /usr/lib/ruby/1.8/rexml/node.rb:23:in `to_s'
+  	from /home/venuedriver/releases/20091212010145/vendor/plugins/active_merchant/lib/active_merchant/billing/gateways/psigate.rb:127:in `post_data'
+  	from /home/venuedriver/releases/20091212010145/vendor/plugins/active_merchant/lib/active_merchant/billing/gateways/psigate.rb:89:in `commit'
+  	from /home/venuedriver/releases/20091212010145/vendor/plugins/active_merchant/lib/active_merchant/billing/gateways/psigate.rb:63:in `authorize'
+  	from (eval):44
+  	from /usr/local/lib/site_ruby/1.8/rubygems/custom_require.rb:27:in `eval'
+  	from /usr/lib/ruby/gems/1.8/gems/rails-2.1.2/lib/commands/runner.rb:45
+  	from /usr/local/lib/site_ruby/1.8/rubygems/custom_require.rb:27:in `gem_original_require'
+  	from /usr/local/lib/site_ruby/1.8/rubygems/custom_require.rb:27:in `require'
+  	from script/runner:3
+
 == Supported Direct Payment Gateways
 
 The {ActiveMerchant Wiki}[http://github.com/Shopify/active_merchant/wikis] contains a {table of features supported by each gateway}[http://github.com/Shopify/active_merchant/wikis/gatewayfeaturematrix].
